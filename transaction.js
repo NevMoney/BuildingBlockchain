@@ -12,6 +12,7 @@ class Transaction {
     this.to = to
     this.amount = amount
     this.gas = gas
+    this.tx_hash = SHA256(this.from + this.to + this.amount + this.gas)
   }
 
   sign(key) {

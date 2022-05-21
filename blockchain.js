@@ -8,20 +8,17 @@ const EC = require('elliptic').ec,
 const ZERO_KEY_PAIR = ec.genKeyPair()
 const ZERO_ADDRESSS = ZERO_KEY_PAIR.getPublic('hex')
 const holderKeyPair = ec.genKeyPair()
-
-// let key = ec.genKeyPair()
-// let publicKey = key.getPublic('hex')
-// let privateKey = key.getPrivate('hex')
+const holderAddress = holderKeyPair.getPublic('hex')
 
 // create a blockchain class
 class Blockchain {
   constructor() {
     const initialCoinRelease = new Transaction(
       ZERO_ADDRESSS,
-      holderKeyPair.getPublic('hex'),
+      holderAddress,
       1000000,
     )
-    this.chain = [new Block(Date.now().toString())]
+    this.chain = [new Block(Date.now().toString(), [initialCoinRelease])]
     this.difficulty = 1
     this.blocktime = 5000 // 5 seconds
     this.transactions = []
@@ -53,7 +50,6 @@ class Blockchain {
   addBlock(newBlock) {
     newBlock.prevHash = this.getLastBlock().hash
     newBlock.hash = newBlock.getHash()
-    // mine the block
     newBlock.mine(this.difficulty)
 
     this.chain.push(newBlock)
@@ -69,6 +65,7 @@ class Blockchain {
     if (transaction.isValid(transaction, this)) {
       this.transactions.push(transaction)
     }
+    console.log('Tx Hash @ addTx', this.transaction.hash)
   }
 
   mineTransactions(rewardAddress) {

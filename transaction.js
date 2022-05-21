@@ -7,10 +7,11 @@ const ZERO_KEY_PAIR = ec.genKeyPair()
 const ZERO_ADDRESSS = ZERO_KEY_PAIR.getPublic('hex')
 
 class Transaction {
-  constructor(from, to, amount) {
+  constructor(from, to, amount, gas = 0) {
     this.from = from
     this.to = to
     this.amount = amount
+    this.gas = gas
   }
 
   sign(key) {
@@ -18,7 +19,7 @@ class Transaction {
       throw new Error('You cannot sign transactions for other wallets!')
     } else {
       this.signature = key
-        .sign(SHA256(this.from + this.to + this.amount), 'base64')
+        .sign(SHA256(this.from + this.to + this.amount, this.gas), 'base64')
         .toDER('hex')
     }
   }
@@ -32,10 +33,11 @@ class Transaction {
       // (chain.getBalance(tx.from) >= tx.amount ||
       //   tx.from === ZERO_ADDRESSS && tx.amount === this.reward) &&
       // FROM BLOG
-      (chain.getBalance(tx.from) >= tx.amount || tx.from === ZERO_ADDRESSS) &&
+      (chain.getBalance(tx.from) >= tx.amount + tx.gas ||
+        tx.from === ZERO_ADDRESSS) &&
       ec
         .keyFromPublic(tx.from, 'hex')
-        .verify(SHA256(tx.from + tx.to + tx.amount), tx.signature)
+        .verify(SHA256(tx.from + tx.to + tx.amount + tx.gas), tx.signature)
     )
   }
 }

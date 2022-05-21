@@ -39,7 +39,7 @@ class Blockchain {
     this.chain.forEach((block) => {
       block.data.forEach((transaction) => {
         if (transaction.from == address) {
-          balance -= transaction.amount
+          balance -= transaction.amount + transaction.gas
         }
         if (transaction.to == address) {
           balance += transaction.amount
@@ -72,10 +72,16 @@ class Blockchain {
   }
 
   mineTransactions(rewardAddress) {
+    let gas
+
+    this.transactions.forEach((transaction) => {
+      gas += transaction.gas
+    })
+
     const rewardTransaction = new Transaction(
       ZERO_ADDRESSS,
       rewardAddress,
-      this.reward,
+      this.reward + gas,
     )
     rewardTransaction.sign(ZERO_KEY_PAIR)
 

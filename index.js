@@ -22,18 +22,18 @@ const friend2Address = friend2Wallet.getPublic('hex')
 const tx1 = new Transaction(myAddress, friend1Address, 260, 1)
 const tx2 = new Transaction(myAddress, friend2Address, 125, 1)
 
-// add a new block
-TChain.addBlock(new Block(Date.now().toString(), [tx1, tx2]))
-console.log(
-  'Balances',
-  TChain.getBalance(myAddress),
-  TChain.getBalance(friend1Address),
-  TChain.getBalance(friend2Address),
-)
-console.log('second block tx', TChain.chain[1].data)
-console.log('second block tx first txHash', TChain.chain[1].data[0].tx_hash)
-console.log(
-  'second block tx first signature',
-  TChain.chain[1].data[0].signature,
-)
-console.log('blockchain', TChain.chain)
+// // add a new block
+// TChain.addBlock(new Block(Date.now().toString(), [tx1, tx2]))
+// console.log(
+//   'Balances',
+//   TChain.getBalance(myAddress),
+//   TChain.getBalance(friend1Address),
+//   TChain.getBalance(friend2Address),
+// )
+// console.log('second block tx', TChain.chain[1].data)
+// console.log('second block tx first txHash', TChain.chain[1].data[0].tx_hash)
+// console.log(
+//   'second block tx first signature',
+//   TChain.chain[1].data[0].signature,
+// )
+// console.log('blockchain', TChain.chain)

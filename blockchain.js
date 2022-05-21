@@ -23,6 +23,9 @@ class Blockchain {
     this.blocktime = 5000 // 5 seconds
     this.transactions = []
     this.reward = 100
+
+    console.log('public addr', holderAddress)
+    console.log('pvt key', holderKeyPair.getPrivate('hex'))
   }
 
   // get the last block in the chain

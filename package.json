@@ -9,6 +9,7 @@
   "author": "Nev K",
   "license": "MIT",
   "dependencies": {
-    "elliptic": "^6.5.4"
+    "elliptic": "^6.5.4",
+    "ws": "^8.6.0"
   }
 }

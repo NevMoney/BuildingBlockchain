@@ -16,9 +16,7 @@ class Transaction {
   }
 
   sign(key) {
-    if (key.getPublic('hex') !== this.from) {
-      throw new Error('You cannot sign transactions for other wallets!')
-    } else {
+    if (key.getPublic('hex') === this.from) {
       this.signature = key
         .sign(SHA256(this.from + this.to + this.amount, this.gas), 'base64')
         .toDER('hex')

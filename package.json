@@ -7,5 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Nev K",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "elliptic": "^6.5.4"
+  }
 }
